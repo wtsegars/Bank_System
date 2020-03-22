@@ -29,16 +29,18 @@ private:
 };
 
 struct AccountDatabase {
-    void retrieve_amount(long balance) {
-
-    }
-    void set_amount(long balance) {
-
-    }
+    virtual ~AccountDatabase() = default;
+    virtual void retrieve_amount(long balance) = 0;
+    virtual void set_amount(long old_balance, long new_balance) = 0;
 };
 
 struct InMemoryAccountDatabase : AccountDatabase {
-    
+    void retrieve_amount(long balance) {
+        printf("The balace is: %ld\n", balance);
+    }
+    void set_amount(long old_balance, long new_balance) {
+        printf("The balance has been changed from %ld to %ld", old_balance, new_balance);
+    }
 };
 
 int main() {
