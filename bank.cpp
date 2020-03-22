@@ -54,5 +54,15 @@ struct InMemoryAccountDatabase : AccountDatabase {
 };
 
 int main() {
-
+    ConsoleLogger console_logger;
+    FileLogger file_logger;
+    Bank bank;
+    InMemoryAccountDatabase in_memory_account_database;
+    bank.set_logger(&console_logger); 
+    bank.make_transfer(1000, 2000, 49.95);
+    bank.set_logger(&file_logger); 
+    bank.make_transfer(2000, 4000, 20.00); 
+    bank.make_account(&in_memory_account_database);
+    bank.balance(69.95);
+    bank.change_balance(69.95, 35.95);
 }
