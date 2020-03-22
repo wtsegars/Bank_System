@@ -27,3 +27,20 @@ struct Bank {
 private:
     Logger* logger{};
 };
+
+struct AccountDatabase {
+    void retrieve_amount(long balance) {
+
+    }
+    void set_amount(long balance) {
+
+    }
+};
+
+struct InMemoryAccountDatabase : AccountDatabase {
+    
+};
+
+int main() {
+
+}
