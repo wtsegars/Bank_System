@@ -5,6 +5,12 @@ struct Logger {
     virtual void log_transfer(long from, long to, double amount) = 0;
 };
 
+struct AccountDatabase {
+    virtual ~AccountDatabase() = default;
+    virtual void retrieve_amount(double balance) = 0;
+    virtual void set_amount(double old_balance, double new_balance) = 0;
+};
+
 struct ConsoleLogger : Logger {
     void log_transfer(long from, long to, double amount) override {
         printf("[cons] %ld -> %ld: %f\n", from, to, amount);
@@ -27,10 +33,10 @@ struct Bank {
     void make_account(AccountDatabase* new_account) {
         accountdatabase = new_account;
     }
-    void balance(long balance) {
+    void balance(double balance) {
         if (accountdatabase) accountdatabase->retrieve_amount(balance);
     }
-    void change_balance(long old_balance, long new_balance) {
+    void change_balance(double old_balance, double new_balance) {
         if (accountdatabase) accountdatabase->set_amount(old_balance, new_balance);
     }
 private:
@@ -38,18 +44,12 @@ private:
     AccountDatabase* accountdatabase{};
 };
 
-struct AccountDatabase {
-    virtual ~AccountDatabase() = default;
-    virtual void retrieve_amount(long balance) = 0;
-    virtual void set_amount(long old_balance, long new_balance) = 0;
-};
-
 struct InMemoryAccountDatabase : AccountDatabase {
-    void retrieve_amount(long balance) {
-        printf("The balace is: %ld\n", balance);
+    void retrieve_amount(double balance) {
+        printf("The balace is: %f\n", balance);
     }
-    void set_amount(long old_balance, long new_balance) {
-        printf("The balance has been changed from %ld to %ld", old_balance, new_balance);
+    void set_amount(double old_balance, double new_balance) {
+        printf("The balance has been changed from %f to %f", old_balance, new_balance);
     }
 };
 
