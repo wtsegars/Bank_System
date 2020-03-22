@@ -24,8 +24,18 @@ struct Bank {
     void make_transfer(long from, long to, double amount) {
         if (logger) logger->log_transfer(from, to, amount);
     }
+    void make_account(AccountDatabase* new_account) {
+        accountdatabase = new_account;
+    }
+    void balance(long balance) {
+        if (accountdatabase) accountdatabase->retrieve_amount(balance);
+    }
+    void change_balance(long old_balance, long new_balance) {
+        if (accountdatabase) accountdatabase->set_amount(old_balance, new_balance);
+    }
 private:
     Logger* logger{};
+    AccountDatabase* accountdatabase{};
 };
 
 struct AccountDatabase {
